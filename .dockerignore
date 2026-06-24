@@ -1,0 +1,18 @@
+.env
+.git
+.idea
+.pytest_cache
+.runtime
+__pycache__
+*.pyc
+venv
+data/cache
+data/processed
+data/uploads
+outputs
+pytest-tmp
+docs
+samples
+tests
+Task file.pdf
+*.pdf

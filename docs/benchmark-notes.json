@@ -1,0 +1,35 @@
+{
+  "environment": {
+    "device": "CPU-only observed during local run",
+    "gpu_used": false,
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "ocr": "EasyOCR",
+    "sample": "samples\\demo_invoice.pdf"
+  },
+  "live_run": {
+    "started_at": "2026-06-24T19:06:53",
+    "finished_at": "2026-06-24T19:44:43",
+    "ocr_processing_time_seconds": 29.35,
+    "ocr_confidence": 0.818,
+    "correction_method": "llm",
+    "classification": {
+      "document_type": "Invoice",
+      "confidence": 1.0,
+      "method": "llm"
+    },
+    "validation": {
+      "email": true,
+      "phone": true,
+      "date": true,
+      "pan": true,
+      "gst": true,
+      "total_amount": true
+    },
+    "qa_answer": "Rs: 12,450.00"
+  },
+  "notes": [
+    "Qwen CPU inference was slow during live verification; GPU is recommended for demos.",
+    "First model/OCR startup can be slower because model files are loaded from disk or downloaded when not cached.",
+    "Use HF_LOCAL_FILES_ONLY=true after caching the Hugging Face model for restricted-network demos."
+  ]
+}

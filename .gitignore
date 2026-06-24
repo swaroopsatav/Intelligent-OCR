@@ -1,0 +1,15 @@
+.env
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+pytest-tmp/
+.idea/
+
+data/uploads/
+data/processed/
+data/cache/
+data/extracted/
+data/demo/
+outputs/
+.runtime/

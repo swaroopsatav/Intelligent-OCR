@@ -1,0 +1,670 @@
+{
+  "started_at": "2026-06-24T19:06:53",
+  "sample": "samples\\demo_invoice.pdf",
+  "upload": {
+    "filename": "demo_invoice.pdf",
+    "file_path": "data/uploads/demo_invoice.pdf",
+    "file_size": 1058,
+    "message": "Upload successful"
+  },
+  "preprocess": {
+    "processed_images": [
+      "data/processed/processed_page_1.png"
+    ],
+    "preprocessing_results": [
+      {
+        "original_image": "data/processed/page_1.png",
+        "processed_image": "data/processed/processed_page_1.png",
+        "applied_steps": [
+          "grayscale",
+          "deskew",
+          "enhancement",
+          "threshold"
+        ]
+      }
+    ]
+  },
+  "ocr": [
+    {
+      "text": "INVOICE\nInvoice No: INV-2026-014\nDate: 24/06/2026\nBill To: Swaroop Satav\nCompany: Acme Services\nEmail: billing@example.com\nPhone: 9876543210\nGST: 27ABCDE1234F1ZS\nPAN: ABCDE1234F\nTotal Amount: Rs: 12,450.00\nPayment Status: Pending",
+      "confidence": 0.818,
+      "line_count": 11,
+      "bounding_boxes": [
+        {
+          "text": "INVOICE",
+          "confidence": 0.9996,
+          "box": [
+            [
+              106.0,
+              118.0
+            ],
+            [
+              222.0,
+              118.0
+            ],
+            [
+              222.0,
+              150.0
+            ],
+            [
+              106.0,
+              150.0
+            ]
+          ]
+        },
+        {
+          "text": "Invoice No: INV-2026-014",
+          "confidence": 0.6658,
+          "box": [
+            [
+              106.0,
+              156.0
+            ],
+            [
+              422.0,
+              156.0
+            ],
+            [
+              422.0,
+              188.0
+            ],
+            [
+              106.0,
+              188.0
+            ]
+          ]
+        },
+        {
+          "text": "Date: 24/06/2026",
+          "confidence": 0.678,
+          "box": [
+            [
+              106.0,
+              194.0
+            ],
+            [
+              320.0,
+              194.0
+            ],
+            [
+              320.0,
+              224.0
+            ],
+            [
+              106.0,
+              224.0
+            ]
+          ]
+        },
+        {
+          "text": "Bill To: Swaroop Satav",
+          "confidence": 0.8087,
+          "box": [
+            [
+              105.0,
+              228.0
+            ],
+            [
+              387.0,
+              228.0
+            ],
+            [
+              387.0,
+              265.0
+            ],
+            [
+              105.0,
+              265.0
+            ]
+          ]
+        },
+        {
+          "text": "Company: Acme Services",
+          "confidence": 0.919,
+          "box": [
+            [
+              104.0,
+              265.0
+            ],
+            [
+              425.0,
+              265.0
+            ],
+            [
+              425.0,
+              305.0
+            ],
+            [
+              104.0,
+              305.0
+            ]
+          ]
+        },
+        {
+          "text": "Email: billing@example.com",
+          "confidence": 0.8112,
+          "box": [
+            [
+              107.0,
+              300.0
+            ],
+            [
+              451.0,
+              300.0
+            ],
+            [
+              451.0,
+              342.0
+            ],
+            [
+              107.0,
+              342.0
+            ]
+          ]
+        },
+        {
+          "text": "Phone: 9876543210",
+          "confidence": 0.9321,
+          "box": [
+            [
+              106.0,
+              342.0
+            ],
+            [
+              356.0,
+              342.0
+            ],
+            [
+              356.0,
+              374.0
+            ],
+            [
+              106.0,
+              374.0
+            ]
+          ]
+        },
+        {
+          "text": "GST: 27ABCDE1234F1ZS",
+          "confidence": 0.635,
+          "box": [
+            [
+              106.0,
+              380.0
+            ],
+            [
+              428.0,
+              380.0
+            ],
+            [
+              428.0,
+              410.0
+            ],
+            [
+              106.0,
+              410.0
+            ]
+          ]
+        },
+        {
+          "text": "PAN: ABCDE1234F",
+          "confidence": 0.9651,
+          "box": [
+            [
+              106.0,
+              416.0
+            ],
+            [
+              352.0,
+              416.0
+            ],
+            [
+              352.0,
+              448.0
+            ],
+            [
+              106.0,
+              448.0
+            ]
+          ]
+        },
+        {
+          "text": "Total Amount: Rs: 12,450.00",
+          "confidence": 0.5921,
+          "box": [
+            [
+              105.0,
+              452.0
+            ],
+            [
+              457.0,
+              452.0
+            ],
+            [
+              457.0,
+              488.0
+            ],
+            [
+              105.0,
+              488.0
+            ]
+          ]
+        },
+        {
+          "text": "Payment Status: Pending",
+          "confidence": 0.9908,
+          "box": [
+            [
+              104.0,
+              488.0
+            ],
+            [
+              416.0,
+              488.0
+            ],
+            [
+              416.0,
+              528.0
+            ],
+            [
+              104.0,
+              528.0
+            ]
+          ]
+        }
+      ],
+      "table_rows": [
+        {
+          "row_index": 1,
+          "column_count": 1,
+          "text": "INVOICE",
+          "cells": [
+            {
+              "text": "INVOICE",
+              "confidence": 0.9996,
+              "box": [
+                [
+                  106.0,
+                  118.0
+                ],
+                [
+                  222.0,
+                  118.0
+                ],
+                [
+                  222.0,
+                  150.0
+                ],
+                [
+                  106.0,
+                  150.0
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "row_index": 2,
+          "column_count": 1,
+          "text": "Invoice No: INV-2026-014",
+          "cells": [
+            {
+              "text": "Invoice No: INV-2026-014",
+              "confidence": 0.6658,
+              "box": [
+                [
+                  106.0,
+                  156.0
+                ],
+                [
+                  422.0,
+                  156.0
+                ],
+                [
+                  422.0,
+                  188.0
+                ],
+                [
+                  106.0,
+                  188.0
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "row_index": 3,
+          "column_count": 1,
+          "text": "Date: 24/06/2026",
+          "cells": [
+            {
+              "text": "Date: 24/06/2026",
+              "confidence": 0.678,
+              "box": [
+                [
+                  106.0,
+                  194.0
+                ],
+                [
+                  320.0,
+                  194.0
+                ],
+                [
+                  320.0,
+                  224.0
+                ],
+                [
+                  106.0,
+                  224.0
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "row_index": 4,
+          "column_count": 1,
+          "text": "Bill To: Swaroop Satav",
+          "cells": [
+            {
+              "text": "Bill To: Swaroop Satav",
+              "confidence": 0.8087,
+              "box": [
+                [
+                  105.0,
+                  228.0
+                ],
+                [
+                  387.0,
+                  228.0
+                ],
+                [
+                  387.0,
+                  265.0
+                ],
+                [
+                  105.0,
+                  265.0
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "row_index": 5,
+          "column_count": 1,
+          "text": "Company: Acme Services",
+          "cells": [
+            {
+              "text": "Company: Acme Services",
+              "confidence": 0.919,
+              "box": [
+                [
+                  104.0,
+                  265.0
+                ],
+                [
+                  425.0,
+                  265.0
+                ],
+                [
+                  425.0,
+                  305.0
+                ],
+                [
+                  104.0,
+                  305.0
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "row_index": 6,
+          "column_count": 1,
+          "text": "Email: billing@example.com",
+          "cells": [
+            {
+              "text": "Email: billing@example.com",
+              "confidence": 0.8112,
+              "box": [
+                [
+                  107.0,
+                  300.0
+                ],
+                [
+                  451.0,
+                  300.0
+                ],
+                [
+                  451.0,
+                  342.0
+                ],
+                [
+                  107.0,
+                  342.0
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "row_index": 7,
+          "column_count": 1,
+          "text": "Phone: 9876543210",
+          "cells": [
+            {
+              "text": "Phone: 9876543210",
+              "confidence": 0.9321,
+              "box": [
+                [
+                  106.0,
+                  342.0
+                ],
+                [
+                  356.0,
+                  342.0
+                ],
+                [
+                  356.0,
+                  374.0
+                ],
+                [
+                  106.0,
+                  374.0
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "row_index": 8,
+          "column_count": 1,
+          "text": "GST: 27ABCDE1234F1ZS",
+          "cells": [
+            {
+              "text": "GST: 27ABCDE1234F1ZS",
+              "confidence": 0.635,
+              "box": [
+                [
+                  106.0,
+                  380.0
+                ],
+                [
+                  428.0,
+                  380.0
+                ],
+                [
+                  428.0,
+                  410.0
+                ],
+                [
+                  106.0,
+                  410.0
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "row_index": 9,
+          "column_count": 1,
+          "text": "PAN: ABCDE1234F",
+          "cells": [
+            {
+              "text": "PAN: ABCDE1234F",
+              "confidence": 0.9651,
+              "box": [
+                [
+                  106.0,
+                  416.0
+                ],
+                [
+                  352.0,
+                  416.0
+                ],
+                [
+                  352.0,
+                  448.0
+                ],
+                [
+                  106.0,
+                  448.0
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "row_index": 10,
+          "column_count": 1,
+          "text": "Total Amount: Rs: 12,450.00",
+          "cells": [
+            {
+              "text": "Total Amount: Rs: 12,450.00",
+              "confidence": 0.5921,
+              "box": [
+                [
+                  105.0,
+                  452.0
+                ],
+                [
+                  457.0,
+                  452.0
+                ],
+                [
+                  457.0,
+                  488.0
+                ],
+                [
+                  105.0,
+                  488.0
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "row_index": 11,
+          "column_count": 1,
+          "text": "Payment Status: Pending",
+          "cells": [
+            {
+              "text": "Payment Status: Pending",
+              "confidence": 0.9908,
+              "box": [
+                [
+                  104.0,
+                  488.0
+                ],
+                [
+                  416.0,
+                  488.0
+                ],
+                [
+                  416.0,
+                  528.0
+                ],
+                [
+                  104.0,
+                  528.0
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "key_value_pairs": {
+        "invoice_no": "INV-2026-014",
+        "date": "24/06/2026",
+        "bill_to": "Swaroop Satav",
+        "company": "Acme Services",
+        "email": "billing@example.com",
+        "phone": "9876543210",
+        "gst": "27ABCDE1234F1ZS",
+        "pan": "ABCDE1234F",
+        "total_amount": "Rs: 12,450.00",
+        "payment_status": "Pending"
+      },
+      "overlay_image": "data/processed/overlay_processed_page_1.png",
+      "processing_time": 29.35,
+      "status": "success",
+      "overlay_image_copy": "docs/screenshots/live-ocr-overlay.png"
+    }
+  ],
+  "ocr_text": "INVOICE\nInvoice No: INV-2026-014\nDate: 24/06/2026\nBill To: Swaroop Satav\nCompany: Acme Services\nEmail: billing@example.com\nPhone: 9876543210\nGST: 27ABCDE1234F1ZS\nPAN: ABCDE1234F\nTotal Amount: Rs: 12,450.00\nPayment Status: Pending",
+  "correction": {
+    "corrected_text": "Invoice No: INV-2026-014\nDate: 24/06/2026\nBill To: Swaroop Satav\nCompany: Acme Services\nEmail: billing@example.com\nPhone: 9876543210\nGST: 27ABCDE1234F1ZS\nPAN: ABCDE1234F\nTotal Amount: Rs: 12,450.00\nPayment Status: Pending",
+    "method": "llm",
+    "processing_time": 217.55,
+    "status": "success"
+  },
+  "classification": {
+    "document_type": "Invoice",
+    "confidence": 1.0,
+    "method": "llm"
+  },
+  "extraction": {
+    "document_title": "Invoice",
+    "document_type": "Invoice",
+    "name": "Swaroop Satav",
+    "company_name": "Acme Services",
+    "document_id": "INV-2026-014",
+    "date": "24/06/2026",
+    "address": "Swaroop Satav",
+    "phone": "9876543210",
+    "email": "billing@example.com",
+    "invoice_number": "INV-2026-014",
+    "total_amount": "Rs: 12,450.00",
+    "pan": "ABCDE1234F",
+    "gst": "27ABCDE1234F1ZS",
+    "aadhaar": "",
+    "dynamic_fields": {
+      "line_items": [
+        {
+          "item_description": "Service A",
+          "quantity": 1,
+          "unit_price": "Rs: 1200.00"
+        },
+        {
+          "item_description": "Service B",
+          "quantity": 1,
+          "unit_price": "Rs: 1000.00"
+        }
+      ]
+    }
+  },
+  "validation": {
+    "email": true,
+    "phone": true,
+    "date": true,
+    "pan": true,
+    "gst": true,
+    "total_amount": true
+  },
+  "qa": {
+    "question": "What is the invoice total?",
+    "answer": "Rs: 12,450.00"
+  },
+  "finished_at": "2026-06-24T19:44:43"
+}

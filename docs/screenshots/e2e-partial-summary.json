@@ -1,0 +1,37 @@
+{
+  "upload": {
+    "filename": "demo_invoice.pdf",
+    "file_path": "C:\\Users\\Admin\\PycharmProjects\\Intelligent-OCR\\data\\uploads\\demo_invoice.pdf",
+    "file_size": 1058,
+    "message": "Upload successful"
+  },
+  "preprocess": {
+    "original_images": [
+      "data/processed/page_1.png"
+    ],
+    "processed_images": [
+      "data/processed/processed_page_1.png"
+    ],
+    "preprocessing_results": [
+      {
+        "original_image": "data/processed/page_1.png",
+        "processed_image": "data/processed/processed_page_1.png",
+        "applied_steps": [
+          "grayscale",
+          "deskew",
+          "enhancement"
+        ]
+      }
+    ]
+  },
+  "ocr": [
+    {
+      "text": "INVOICE\nInvoice No: INV-2026-014\nDate: 24/06/2026\nBill To: Swaroop Satav\nCompany: Acme Services\nEmail: billing@example.com\nPhone: 9876543210\nGST: 27ABCDE1234F1Z5\nPAN: ABCDE1234F\nTotal Amount: Rs. 12,450.00\nPayment Status: Pending",
+      "confidence": 0.8427,
+      "line_count": 11,
+      "processing_time": 23.72,
+      "status": "success"
+    }
+  ],
+  "ocr_text": "INVOICE\nInvoice No: INV-2026-014\nDate: 24/06/2026\nBill To: Swaroop Satav\nCompany: Acme Services\nEmail: billing@example.com\nPhone: 9876543210\nGST: 27ABCDE1234F1Z5\nPAN: ABCDE1234F\nTotal Amount: Rs. 12,450.00\nPayment Status: Pending"
+}
