@@ -1,3 +1,4 @@
+import hashlib
 import os
 import logging
 
@@ -13,6 +14,20 @@ from backend.config.settings import (
 
 
 class PDFService:
+
+    @staticmethod
+    def _output_dir(file_path: str):
+        stem = os.path.splitext(
+            os.path.basename(file_path)
+        )[0].replace(
+            " ",
+            "_"
+        )
+
+        return os.path.join(
+            PROCESSED_DIR,
+            stem
+        )
 
     @staticmethod
     def pdf_to_images(
@@ -34,8 +49,12 @@ class PDFService:
                 f"PDF not found: {pdf_path}"
             )
 
+        output_dir = PDFService._output_dir(
+            pdf_path
+        )
+
         os.makedirs(
-            PROCESSED_DIR,
+            output_dir,
             exist_ok=True
         )
 
@@ -68,7 +87,7 @@ class PDFService:
             )
 
             image_path = os.path.join(
-                PROCESSED_DIR,
+                output_dir,
                 f"page_{page_index + 1}.png"
             )
 

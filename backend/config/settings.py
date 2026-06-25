@@ -100,3 +100,47 @@ HF_LOCAL_FILES_ONLY = (
     ).lower()
     == "true"
 )
+
+OCR_BATCH_SIZE = int(
+    os.getenv(
+        "OCR_BATCH_SIZE",
+        "4"
+    )
+)
+
+FAST_PIPELINE_MODE = (
+    os.getenv(
+        "FAST_PIPELINE_MODE",
+        "true"
+    ).lower()
+    == "true"
+)
+
+USE_LLM_OCR_CORRECTION = (
+    os.getenv(
+        "USE_LLM_OCR_CORRECTION",
+        "false"
+    ).lower()
+    == "true"
+)
+
+CLASSIFICATION_HEURISTIC_THRESHOLD = float(
+    os.getenv(
+        "CLASSIFICATION_HEURISTIC_THRESHOLD",
+        "0.85"
+    )
+)
+
+LLM_MAX_INPUT_TOKENS = int(
+    os.getenv(
+        "LLM_MAX_INPUT_TOKENS",
+        "1536"
+    )
+)
+
+LLM_CACHE_SIZE = int(
+    os.getenv(
+        "LLM_CACHE_SIZE",
+        "32"
+    )
+)

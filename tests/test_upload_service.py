@@ -50,9 +50,16 @@ def test_save_file_writes_upload_to_configured_directory(
         )
     )
 
-    saved_file = tmp_path / "sample.pdf"
+    saved_file = tmp_path / result["stored_filename"]
 
     assert saved_file.read_bytes() == b"%PDF test"
     assert result["filename"] == "sample.pdf"
+    assert result["stored_filename"].startswith(
+        "sample_"
+    )
+    assert result["stored_filename"].endswith(
+        ".pdf"
+    )
     assert result["file_path"] == str(saved_file)
+    assert result["file_size"] == len(b"%PDF test")
     assert result["file_size"] == len(b"%PDF test")

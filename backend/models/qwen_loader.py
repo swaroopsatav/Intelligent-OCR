@@ -38,6 +38,10 @@ class QwenLoader:
 
             try:
 
+                if torch.cuda.is_available():
+                    torch.backends.cuda.matmul.allow_tf32 = True
+                    torch.backends.cudnn.allow_tf32 = True
+
                 cls.tokenizer = (
                     AutoTokenizer.from_pretrained(
                         model_name,
@@ -57,7 +61,8 @@ class QwenLoader:
                         low_cpu_mem_usage=True,
                         device_map="auto",
                         trust_remote_code=True,
-                        local_files_only=HF_LOCAL_FILES_ONLY
+                        local_files_only=HF_LOCAL_FILES_ONLY,
+                        attn_implementation="sdpa"
                     )
                 )
 

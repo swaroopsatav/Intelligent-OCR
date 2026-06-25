@@ -44,10 +44,12 @@ class OCRService:
             logger.info(
                 "Loading EasyOCR model..."
             )
+            
+            import torch
 
             cls._reader = Reader(
                 OCR_LANGUAGES,
-                gpu=False
+                gpu=torch.cuda.is_available()
             )
 
         return cls._reader
@@ -63,9 +65,9 @@ class OCRService:
             exist_ok=True
         )
 
-        cache_key = hashlib.md5(
-            image_path.encode()
-        ).hexdigest()
+        hasher = hashlib.sha256()
+        hasher.update(image_path.encode("utf-8"))
+        cache_key = hasher.hexdigest()
 
         return os.path.join(
             CACHE_DIR,
@@ -751,3 +753,5 @@ class OCRService:
             "\\",
             "/"
         )
+
+

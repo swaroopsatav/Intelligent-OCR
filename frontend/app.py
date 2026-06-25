@@ -42,6 +42,7 @@ PIPELINE_STATE_KEYS = [
     "processed_images",
     "preprocessing_results",
     "ocr_text",
+    "ocr_metadata",
     "corrected_text",
     "document_type",
     "classification_confidence",
@@ -57,6 +58,62 @@ def clear_pipeline_state():
             key,
             None
         )
+
+
+def clear_session_keys(keys):
+    for key in keys:
+        st.session_state.pop(
+            key,
+            None
+        )
+
+
+def clear_after_preprocessing():
+    clear_session_keys(
+        [
+            "ocr_text",
+            "ocr_metadata",
+            "corrected_text",
+            "document_type",
+            "classification_confidence",
+            "extracted_data",
+            "validation_result",
+            "qa_history"
+        ]
+    )
+
+
+def clear_after_ocr():
+    clear_session_keys(
+        [
+            "corrected_text",
+            "document_type",
+            "classification_confidence",
+            "extracted_data",
+            "validation_result",
+            "qa_history"
+        ]
+    )
+
+
+def clear_after_correction():
+    clear_session_keys(
+        [
+            "document_type",
+            "classification_confidence",
+            "extracted_data",
+            "validation_result",
+            "qa_history"
+        ]
+    )
+
+
+def clear_after_extraction():
+    clear_session_keys(
+        [
+            "validation_result"
+        ]
+    )
 
 
 def show_api_error(error, fallback_message="Something went wrong."):
@@ -485,6 +542,8 @@ if "upload_response" in st.session_state:
                 ]["file_path"]
             )
 
+            clear_after_preprocessing()
+
             with st.spinner(
                 "Preprocessing..."
             ):
@@ -628,6 +687,8 @@ if "processed_images" in st.session_state:
     ):
 
         try:
+
+            clear_after_ocr()
 
             full_text = ""
 
@@ -804,6 +865,8 @@ if "ocr_text" in st.session_state:
     ):
 
         try:
+
+            clear_after_correction()
 
             with st.spinner(
                 "Correcting OCR text..."
@@ -982,6 +1045,8 @@ if "corrected_text" in st.session_state:
     ):
 
         try:
+
+            clear_after_extraction()
 
             with st.spinner(
                 "Extracting information..."
@@ -1477,3 +1542,5 @@ if completed_steps == total_steps:
     st.success(
         "Intelligent OCR Pipeline Completed Successfully!"
     )
+
+

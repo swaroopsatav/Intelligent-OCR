@@ -171,13 +171,20 @@ Expected response:
 In a second terminal, start Streamlit from the project root:
 
 ```powershell
-.\venv\Scripts\streamlit run frontend\app.py --server.address 127.0.0.1 --server.port 8501
+.\venv\Scripts\streamlit run frontend\app.py --server.address 0.0.0.0 --server.port 8501
 ```
 
 Open:
 
 ```text
 http://127.0.0.1:8501
+```
+
+For another device on the same Wi-Fi/LAN, open the host machine's current IPv4
+address with port `8501`, for example:
+
+```text
+http://192.168.1.11:8501
 ```
 
 The frontend API client targets `BASE_URL` from `.env`, defaulting to

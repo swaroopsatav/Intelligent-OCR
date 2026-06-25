@@ -1,3 +1,4 @@
+import hashlib
 import os
 import logging
 
@@ -15,7 +16,46 @@ from backend.config.settings import (
     ENABLE_THRESHOLD
 )
 
+
 class ImageService:
+
+    @staticmethod
+    def _file_hash(file_path: str):
+        hasher = hashlib.sha256()
+
+        with open(file_path, "rb") as file:
+            for chunk in iter(
+                lambda: file.read(1024 * 1024),
+                b""
+            ):
+                hasher.update(chunk)
+
+        return hasher.hexdigest()[:12]
+
+    @staticmethod
+    def _output_dir(file_path: str):
+        parent_name = os.path.basename(
+            os.path.dirname(file_path)
+        )
+        stem = os.path.splitext(
+            os.path.basename(file_path)
+        )[0].replace(
+            " ",
+            "_"
+        )
+        content_hash = ImageService._file_hash(
+            file_path
+        )
+
+        if parent_name and parent_name != "uploads":
+            folder_name = parent_name
+        else:
+            folder_name = f"{stem}_{content_hash}"
+
+        return os.path.join(
+            PROCESSED_DIR,
+            folder_name
+        )
 
     @staticmethod
     def deskew_image(
@@ -118,10 +158,6 @@ class ImageService:
                 f"Unable to load image: {image_path}"
             )
 
-        # --------------------------
-        # Convert to Grayscale
-        # --------------------------
-
         processed = cv2.cvtColor(
             image,
             cv2.COLOR_BGR2GRAY
@@ -130,10 +166,6 @@ class ImageService:
         applied_steps = [
             "grayscale"
         ]
-
-        # --------------------------
-        # Noise Removal
-        # --------------------------
 
         if ENABLE_BLUR:
 
@@ -147,10 +179,6 @@ class ImageService:
                 "noise_removal"
             )
 
-        # --------------------------
-        # Deskewing
-        # --------------------------
-
         if ENABLE_DESKEW:
 
             processed = ImageService.deskew_image(
@@ -161,10 +189,6 @@ class ImageService:
                 "deskew"
             )
 
-        # --------------------------
-        # Image Enhancement
-        # --------------------------
-
         if ENABLE_ENHANCEMENT:
 
             processed = ImageService.enhance_image(
@@ -174,10 +198,6 @@ class ImageService:
             applied_steps.append(
                 "enhancement"
             )
-
-        # --------------------------
-        # Thresholding
-        # --------------------------
 
         if ENABLE_THRESHOLD:
 
@@ -193,13 +213,17 @@ class ImageService:
                 "threshold"
             )
 
+        output_dir = ImageService._output_dir(
+            image_path
+        )
+
         os.makedirs(
-            PROCESSED_DIR,
+            output_dir,
             exist_ok=True
         )
 
         processed_path = os.path.join(
-            PROCESSED_DIR,
+            output_dir,
             f"processed_{os.path.basename(image_path)}"
         )
 
