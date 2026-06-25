@@ -78,6 +78,9 @@ Recommended local hardware is at least 16 GB RAM, with 32 GB preferred for a
 smoother Qwen demo. GPU acceleration significantly improves model-backed
 correction, extraction, classification, and Q&A latency.
 
-The project includes deterministic tests for routing, parsing, validation, and
-service behavior. Real end-to-end OCR/LLM quality should still be verified on
-representative sample documents before final submission.
+The project includes deterministic tests for routing, parsing, validation,
+table-row metadata, sample-field scoring, and service behavior. Synthetic sample
+field accuracy can be regenerated with
+`scripts/evaluate_sample_outputs.py`; the current baseline result is stored in
+`docs/sample-evaluation.json`. Real end-to-end OCR/LLM quality should still be
+verified on representative private documents before production use.

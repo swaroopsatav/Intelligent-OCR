@@ -30,6 +30,7 @@
   "notes": [
     "Qwen CPU inference was slow during live verification; GPU is recommended for demos.",
     "First model/OCR startup can be slower because model files are loaded from disk or downloaded when not cached.",
-    "Use HF_LOCAL_FILES_ONLY=true after caching the Hugging Face model for restricted-network demos."
+    "Use HF_LOCAL_FILES_ONLY=true after caching the Hugging Face model for restricted-network demos.",
+    "Deterministic sample field scoring is tracked separately in docs/sample-evaluation.json using scripts/evaluate_sample_outputs.py."
   ]
 }

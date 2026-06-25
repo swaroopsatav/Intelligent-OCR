@@ -760,6 +760,19 @@ if "ocr_text" in st.session_state:
             )
 
     if ocr_metadata.get(
+        "tables"
+    ):
+
+        with st.expander(
+            "Structured Tables"
+        ):
+            st.json(
+                ocr_metadata[
+                    "tables"
+                ]
+            )
+
+    if ocr_metadata.get(
         "key_value_pairs"
     ):
 

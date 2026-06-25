@@ -1,6 +1,6 @@
 # Docker Check
 
-Docker deployment files are included:
+Docker deployment files are included and syntax-checked:
 
 ```text
 Dockerfile
@@ -8,23 +8,25 @@ docker-compose.yml
 .dockerignore
 ```
 
-Local verification command attempted:
+Local verification commands:
 
 ```powershell
-docker --version
+.\venv\Scripts\python scripts\verify_docker.py
+docker compose build
 ```
 
-Result in this environment:
+Current result:
 
-```text
-docker: The term 'docker' is not recognized as a name of a cmdlet, function,
-script file, or executable program.
-```
+- Docker CLI is installed: Docker `29.5.3`.
+- `docker compose config` succeeds, so the Compose file is valid.
+- `docker compose build` completed successfully on this machine and produced
+  the backend and frontend images.
 
-Conclusion: Docker proof could not be completed on this machine because Docker
-is not installed or not available on `PATH`. The project is ready for Docker
-testing on a machine with Docker Desktop or Docker Engine installed:
+The machine-readable verification result is stored in
+`docs/docker-check.json`.
+
+To run the built services, start Docker Desktop or Docker Engine, then run:
 
 ```powershell
-docker compose up --build
+docker compose up
 ```

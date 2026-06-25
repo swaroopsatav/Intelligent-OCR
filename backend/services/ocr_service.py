@@ -123,6 +123,11 @@ class OCRService:
                 )
 
                 cached_response.setdefault(
+                    "tables",
+                    []
+                )
+
+                cached_response.setdefault(
                     "overlay_image",
                     ""
                 )
@@ -183,6 +188,10 @@ class OCRService:
                 bounding_boxes
             )
 
+            tables = cls.extract_tables(
+                table_rows
+            )
+
             key_value_pairs = cls.extract_key_value_pairs(
                 text_lines,
                 table_rows
@@ -213,6 +222,8 @@ class OCRService:
                     bounding_boxes,
                 "table_rows":
                     table_rows,
+                "tables":
+                    tables,
                 "key_value_pairs":
                     key_value_pairs,
                 "overlay_image":
@@ -257,6 +268,7 @@ class OCRService:
                 "line_count": 0,
                 "bounding_boxes": [],
                 "table_rows": [],
+                "tables": [],
                 "key_value_pairs": {},
                 "overlay_image": "",
                 "processing_time": 0,
@@ -331,28 +343,246 @@ class OCRService:
                 )
             )
 
+            cells_with_columns = [
+                {
+                    "column_index": column_index,
+                    "text": cell["text"],
+                    "confidence": cell["confidence"],
+                    "box": cell["box"]
+                }
+                for column_index, cell in enumerate(
+                    cells,
+                    start=1
+                )
+            ]
+
             table_rows.append(
                 {
                     "row_index": row_index,
                     "column_count": len(
                         cells
                     ),
+                    "is_table_like": len(
+                        cells
+                    ) > 1,
                     "text": " | ".join(
                         cell["text"]
                         for cell in cells
                     ),
-                    "cells": [
-                        {
-                            "text": cell["text"],
-                            "confidence": cell["confidence"],
-                            "box": cell["box"]
-                        }
-                        for cell in cells
-                    ]
+                    "cells": cells_with_columns
                 }
             )
 
         return table_rows
+
+    @staticmethod
+    def extract_tables(
+        table_rows,
+        x_tolerance=24
+    ):
+
+        candidate_rows = [
+            row
+            for row in table_rows
+            if row.get(
+                "is_table_like"
+            )
+        ]
+
+        if not candidate_rows:
+            return []
+
+        column_positions = []
+
+        for row in candidate_rows:
+
+            for cell in row.get(
+                "cells",
+                []
+            ):
+
+                points = cell.get(
+                    "box",
+                    []
+                )
+
+                if not points:
+                    continue
+
+                x_position = min(
+                    point[0]
+                    for point in points
+                )
+
+                matched_index = None
+
+                for index, position in enumerate(
+                    column_positions
+                ):
+
+                    if abs(position - x_position) <= x_tolerance:
+                        matched_index = index
+                        break
+
+                if matched_index is None:
+                    column_positions.append(
+                        x_position
+                    )
+                else:
+                    column_positions[matched_index] = (
+                        column_positions[matched_index]
+                        + x_position
+                    ) / 2
+
+        column_positions = sorted(
+            column_positions
+        )
+
+        if len(
+            column_positions
+        ) < 2:
+            return []
+
+        structured_rows = []
+
+        for row in candidate_rows:
+
+            values = [
+                ""
+                for _ in column_positions
+            ]
+
+            confidences = [
+                0.0
+                for _ in column_positions
+            ]
+
+            for cell in row.get(
+                "cells",
+                []
+            ):
+
+                points = cell.get(
+                    "box",
+                    []
+                )
+
+                if not points:
+                    continue
+
+                x_position = min(
+                    point[0]
+                    for point in points
+                )
+
+                column_index = min(
+                    range(
+                        len(column_positions)
+                    ),
+                    key=lambda index: abs(
+                        column_positions[index]
+                        - x_position
+                    )
+                )
+
+                if values[column_index]:
+                    values[column_index] = (
+                        values[column_index]
+                        + " "
+                        + cell.get(
+                            "text",
+                            ""
+                        )
+                    ).strip()
+                else:
+                    values[column_index] = cell.get(
+                        "text",
+                        ""
+                    )
+
+                confidences[column_index] = max(
+                    confidences[column_index],
+                    float(
+                        cell.get(
+                            "confidence",
+                            0
+                        )
+                    )
+                )
+
+            structured_rows.append(
+                {
+                    "row_index": row.get(
+                        "row_index"
+                    ),
+                    "values": values,
+                    "confidence": round(
+                        sum(confidences)
+                        / len(confidences),
+                        4
+                    )
+                }
+            )
+
+        headers = [
+            f"column_{index}"
+            for index in range(
+                1,
+                len(column_positions) + 1
+            )
+        ]
+
+        first_row_values = [
+            value.lower()
+            for value in structured_rows[0]["values"]
+        ]
+
+        if any(
+            value in {
+                "item",
+                "description",
+                "qty",
+                "quantity",
+                "amount",
+                "total",
+                "date",
+                "debit",
+                "credit",
+                "balance"
+            }
+            for value in first_row_values
+        ):
+            headers = [
+                value.strip().lower().replace(
+                    " ",
+                    "_"
+                )
+                or headers[index]
+                for index, value in enumerate(
+                    structured_rows[0]["values"]
+                )
+            ]
+
+        records = [
+            {
+                headers[index]: value
+                for index, value in enumerate(
+                    row["values"]
+                )
+            }
+            for row in structured_rows
+        ]
+
+        return [
+            {
+                "column_count": len(
+                    headers
+                ),
+                "headers": headers,
+                "rows": structured_rows,
+                "records": records
+            }
+        ]
 
     @staticmethod
     def extract_key_value_pairs(

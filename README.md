@@ -10,7 +10,8 @@ classification, JSON extraction, field validation, and document Q&A.
 - Upload PDF, PNG, JPG, or JPEG documents.
 - Convert PDF pages to images and apply preprocessing.
 - Extract English text with EasyOCR.
-- Return OCR confidence, bounding boxes, and detected table-like rows.
+- Return OCR confidence, bounding boxes, detected table-like rows, and
+  structured table records.
 - Correct OCR text with a local Hugging Face language model.
 - Classify document type with LLM output plus heuristic confidence safeguards.
 - Extract structured JSON with standard and document-specific fields.
@@ -197,6 +198,16 @@ Frontend: `http://127.0.0.1:8501`
 The compose file mounts `./data` so uploads, processed images, and OCR caches
 survive container restarts.
 
+Docker configuration verification can be reproduced with:
+
+```powershell
+.\venv\Scripts\python scripts\verify_docker.py
+```
+
+The latest local result is stored in `docs/docker-check.json`. On this machine,
+Docker CLI, Compose config validation, and `docker compose build` completed
+successfully.
+
 ## Sample Workflow
 
 1. Open the Streamlit frontend.
@@ -241,6 +252,7 @@ samples/sample_multilingual_invoice.pdf
 samples/sample_receipt_scanned.png
 samples/sample_bank_statement_photo.png
 samples/sample_identity_card_photo.png
+samples/sample_handwritten_note.png
 ```
 
 These are intended for submission review and basic upload/preprocessing/OCR
@@ -256,8 +268,19 @@ Run the automated test suite:
 
 Current suite coverage includes upload validation, API route smoke tests,
 validation logic, extraction parsing, frontend API-client error mapping,
-classification fallback logic, OCR bounding-box/table-row metadata, real sample
-PDF preprocessing, OCR failure handling, and model-loading failure handling.
+classification fallback logic, OCR bounding-box/table-row/table-record
+metadata, real sample PDF preprocessing, OCR failure handling, and
+model-loading failure handling.
+
+Sample field accuracy scoring can be regenerated with:
+
+```powershell
+.\venv\Scripts\python scripts\evaluate_sample_outputs.py --actual docs\sample-baseline-extractions.json --output docs\sample-evaluation.json
+```
+
+The checked-in baseline currently scores 12/12 expected fields across the
+synthetic sample set. Use the same script with live extracted JSON to benchmark
+new OCR/LLM runs.
 
 ## Screenshots
 
@@ -314,6 +337,8 @@ validation logic, challenges, and limitations.
 - Live benchmark notes from the local verification run are stored in
   `docs/benchmark-notes.json`.
 - Docker availability check details are stored in `docs/docker-check.md`.
+- Deterministic sample field scoring is stored in
+  `docs/sample-evaluation.json`.
 
 ## Limitations
 

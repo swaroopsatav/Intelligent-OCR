@@ -26,7 +26,63 @@ def test_extract_table_rows_groups_boxes_by_vertical_position():
     )
 
     assert rows[0]["text"] == "Item | Amount"
+    assert rows[0]["is_table_like"] is True
+    assert rows[0]["cells"][0]["column_index"] == 1
+    assert rows[0]["cells"][1]["column_index"] == 2
     assert rows[1]["text"] == "Total"
+    assert rows[1]["is_table_like"] is False
+
+
+def test_extract_tables_returns_structured_records():
+    rows = [
+        {
+            "row_index": 1,
+            "is_table_like": True,
+            "cells": [
+                {
+                    "text": "Item",
+                    "confidence": 0.98,
+                    "box": [[10, 10], [50, 10], [50, 20], [10, 20]]
+                },
+                {
+                    "text": "Amount",
+                    "confidence": 0.96,
+                    "box": [[120, 10], [180, 10], [180, 20], [120, 20]]
+                }
+            ]
+        },
+        {
+            "row_index": 2,
+            "is_table_like": True,
+            "cells": [
+                {
+                    "text": "Consulting",
+                    "confidence": 0.91,
+                    "box": [[11, 40], [80, 40], [80, 50], [11, 50]]
+                },
+                {
+                    "text": "1200",
+                    "confidence": 0.93,
+                    "box": [[122, 41], [160, 41], [160, 51], [122, 51]]
+                }
+            ]
+        }
+    ]
+
+    tables = OCRService.extract_tables(
+        rows,
+        x_tolerance=10
+    )
+
+    assert tables[0]["headers"] == [
+        "item",
+        "amount"
+    ]
+    assert tables[0]["records"][1] == {
+        "item": "Consulting",
+        "amount": "1200"
+    }
+    assert tables[0]["rows"][1]["confidence"] == 0.92
 
 
 def test_extract_text_returns_bounding_boxes_and_table_rows(monkeypatch, tmp_path):
@@ -68,6 +124,10 @@ def test_extract_text_returns_bounding_boxes_and_table_rows(monkeypatch, tmp_pat
     assert result["confidence"] == 0.85
     assert result["bounding_boxes"][0]["text"] == "Invoice"
     assert result["table_rows"][0]["text"] == "Invoice | 1200"
+    assert result["tables"][0]["records"][0] == {
+        "column_1": "Invoice",
+        "column_2": "1200"
+    }
     assert result["key_value_pairs"] == {}
 
 
